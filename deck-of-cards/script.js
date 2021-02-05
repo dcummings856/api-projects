@@ -1,21 +1,14 @@
-let deckID
+let deckID1
+let deckID2
 
-let getAPI = () => {
+/******player one******/
+let getAPI1 = () => {
     fetch("https://deckofcardsapi.com/api/deck/new/")
         .then(res => res.json()) // parse response as JSON
         .then(data => {
             console.log(data)
-            deckID = data.deck_id
-        })
-        .catch(err => {
-            console.log(`error ${err}`)
-        });
-    }
-
-document.querySelector('.create').addEventListener('click', getAPI)
-
-let shuffleDeck = () => {
-    fetch(`https://deckofcardsapi.com/api/deck/${deckID}/shuffle/?deck_count=1`)
+            deckID1 = data.deck_id
+    fetch(`https://deckofcardsapi.com/api/deck/${deckID1}/shuffle/?deck_count=1`)
     .then(res => res.json()) // parse response as JSON
     .then(data => {
         console.log(data)
@@ -23,19 +16,61 @@ let shuffleDeck = () => {
     .catch(err => {
         console.log(`error ${err}`)
     });
-}
+        })
+        .catch(err => {
+            console.log(`error ${err}`)
+        });
+    }
 
-document.querySelector('.shuffle').addEventListener('click', shuffleDeck)
+document.querySelector('.create1').addEventListener('click', getAPI1)
 
-let drawCard = () => {
-    fetch(`https://deckofcardsapi.com/api/deck/${deckID}/draw/?count=1`)
+
+let drawCard1 = () => {
+    fetch(`https://deckofcardsapi.com/api/deck/${deckID1}/draw/?count=1`)
     .then(res => res.json()) // parse response as JSON
     .then(data => {
-        document.querySelector('img').src = data.cards[0].image
+        document.querySelector('.p1-card').src = data.cards[0].image
     })
     .catch(err => {
         console.log(`error ${err}`)
     });
 }
 
-document.querySelector('.draw').addEventListener('click', drawCard)
+document.querySelector('.draw1').addEventListener('click', drawCard1)
+
+
+/******player two******/
+let getAPI2 = () => {
+    fetch("https://deckofcardsapi.com/api/deck/new/")
+        .then(res => res.json()) // parse response as JSON
+        .then(data => {
+            console.log(data)
+            deckID2 = data.deck_id
+    fetch(`https://deckofcardsapi.com/api/deck/${deckID2}/shuffle/?deck_count=1`)
+    .then(res => res.json()) // parse response as JSON
+    .then(data => {
+        console.log(data)
+    })
+    .catch(err => {
+        console.log(`error ${err}`)
+    });
+        })
+        .catch(err => {
+            console.log(`error ${err}`)
+        });
+    }
+
+    document.querySelector('.create2').addEventListener('click', getAPI2)
+
+    let drawCard2 = () => {
+        fetch(`https://deckofcardsapi.com/api/deck/${deckID2}/draw/?count=1`)
+        .then(res => res.json()) // parse response as JSON
+        .then(data => {
+            document.querySelector('.p2-card').src = data.cards[0].image
+        })
+        .catch(err => {
+            console.log(`error ${err}`)
+        });
+    }
+    
+    document.querySelector('.draw2').addEventListener('click', drawCard2)
