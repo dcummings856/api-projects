@@ -1,8 +1,8 @@
 let deckID1
 let deckID2
 
-/******player one******/
-let getAPI1 = () => {
+/******create decks******/
+let getAPI = () => {
     fetch("https://deckofcardsapi.com/api/deck/new/")
         .then(res => res.json()) // parse response as JSON
         .then(data => {
@@ -20,28 +20,8 @@ let getAPI1 = () => {
         .catch(err => {
             console.log(`error ${err}`)
         });
-    }
 
-document.querySelector('.create1').addEventListener('click', getAPI1)
-
-
-let drawCard1 = () => {
-    fetch(`https://deckofcardsapi.com/api/deck/${deckID1}/draw/?count=1`)
-    .then(res => res.json()) // parse response as JSON
-    .then(data => {
-        document.querySelector('.p1-card').src = data.cards[0].image
-    })
-    .catch(err => {
-        console.log(`error ${err}`)
-    });
-}
-
-document.querySelector('.draw1').addEventListener('click', drawCard1)
-
-
-/******player two******/
-let getAPI2 = () => {
-    fetch("https://deckofcardsapi.com/api/deck/new/")
+        fetch("https://deckofcardsapi.com/api/deck/new/")
         .then(res => res.json()) // parse response as JSON
         .then(data => {
             console.log(data)
@@ -59,10 +39,14 @@ let getAPI2 = () => {
             console.log(`error ${err}`)
         });
     }
+document.querySelector('.create1').addEventListener('click', getAPI)
 
-    document.querySelector('.create2').addEventListener('click', getAPI2)
-
-    let drawCard2 = () => {
+/******draw cards. begin war!******/
+let drawCard1 = () => {
+    fetch(`https://deckofcardsapi.com/api/deck/${deckID1}/draw/?count=1`)
+    .then(res => res.json()) // parse response as JSON
+    .then(data => {
+        document.querySelector('.p1-card').src = data.cards[0].image
         fetch(`https://deckofcardsapi.com/api/deck/${deckID2}/draw/?count=1`)
         .then(res => res.json()) // parse response as JSON
         .then(data => {
@@ -71,6 +55,10 @@ let getAPI2 = () => {
         .catch(err => {
             console.log(`error ${err}`)
         });
-    }
-    
-    document.querySelector('.draw2').addEventListener('click', drawCard2)
+    })
+    .catch(err => {
+        console.log(`error ${err}`)
+    });
+}
+
+document.querySelector('.draw1').addEventListener('click', drawCard1)
